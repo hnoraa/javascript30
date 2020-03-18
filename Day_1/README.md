@@ -1,3 +1,1 @@
-# Day_1
-
-drumkit
+## Day_1
