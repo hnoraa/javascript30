@@ -1,6 +1,8 @@
 ## 30 Day Vanilla JavaScript Day 1
 <p>Day 1 involved creating a drum machine to explore how to use key listeners.</p>
 
+### Code:
+
 ```javascript
 function playSound(e) {
 	// get the audio element based on keydown key code
@@ -34,18 +36,16 @@ keys.forEach(key => key.addEventListener('transitionend', removeTransition));
 window.addEventListener('keydown', playSound);
 ```
 
+### Explaination:
+
 ```javascript
 const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
 ```
-<p>
-This gets all document elements that match the pattert `audio[data-key="${e.keyCode}"]`.
+This gets all document elements that match the pattern `audio[data-key="${e.keyCode}"]`.
 The `${e.keyCode}` in the string is like the variable specifier in strings for .NET.
-</p>
 
 ```javascript
 key.classList.add('playing');
 this.classList.remove('playing');
 ```
-<p>
 These two lines add or remove a css class to an element.
-</p>
