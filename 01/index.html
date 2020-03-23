@@ -81,7 +81,8 @@
 			
 			// add event listeners to all of the keys, this has to be done in a foreach loop
 			// because you have to attach a listener to each item in keys
-			const keys = document.querySelectorAll('.key');keys.forEach(key => key.addEventListener('transitionend', removeTransition));
+			const keys = document.querySelectorAll('.key');
+			keys.forEach(key => key.addEventListener('transitionend', removeTransition));
 			
 			// add event listener to the window to catch keydowns
 			window.addEventListener('keydown', playSound);
