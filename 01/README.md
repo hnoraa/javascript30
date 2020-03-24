@@ -44,6 +44,8 @@ const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
 This gets all document elements that match the pattern `audio[data-key="${e.keyCode}"]`.
 The `${e.keyCode}` in the string is like the variable specifier in strings for .NET.
 
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals
+
 ```javascript
 key.classList.add('playing');
 this.classList.remove('playing');
