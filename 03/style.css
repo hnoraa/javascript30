@@ -1,13 +1,44 @@
-html {
-	font-family: Courier;
+/* css variables section */
+:root {
+	/* css variable declaration/initializations */
+	--base: #ffc600;
+	--spacing: 10px;
+	--blur: 10px;
+}
+
+img {
+	/* to use a variable, call var(--variableName) */
+	padding: var(--spacing);
+	background: var(--base);
+	filter: blur(var(--blur));
+}
+
+.hl {
+	color: var(--base);
+}
+
+a {
+	color: var(--base);
+	text-decoration: none;
+}
+
+/* base css */
+body {
 	text-align: center;
-	font-size: 10px;
 }
 
 body {
-	font-size: 2rem;
-	display: flex;
-	flex: 1;
-	min-height: 100vh;
-	align-items: center;
+	background: #193549;
+	color: #ffffff;
+	font-family: Arial, Helvetica, sans-serif;
+	font-weight: 100;
+	font-size: 50px;
+}
+
+.controls {
+	margin-bottom: 50px;
+}
+
+input {
+	width: 100px;
 }
