@@ -1,17 +1,267 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 	<meta charset="UTF-8">
-	<title></title>
-	<link rel="stylesheet" href="./style.css">
+	<title>Array Cardio 💪</title>
 	<style>
-	
+		body {
+			color: #ffdddd;
+			background: #2e2e2e;
+		}
+		div p {
+			font-weight: bold;
+		}
+		div div {
+			color: #71ffff;
+		}
+		a, 
+		a:link,
+		a:visited,
+		a:hover,
+		a:active {
+			color: #76ff71;
+		}
 	</style>
 </head>
+
 <body>
-	
+	<p><em>Psst: have a look at the JavaScript Console</em> 💁</p>
+
+	<div>
+		<p>Inventors Array</p>
+		<div class="inventors"></div>
+	</div>
+
+	<div>
+		<p>People Array</p>
+		<div class="people"></div>
+	</div>
+
+	<div>
+		<p>Data Array</p>
+		<div class="data"></div>
+	</div>
+
+	<div>
+		<p>1. Filter the list of inventors for those who were born in the 1500's</p>
+		<div class="section-1"></div>
+	</div>
+
+	<div>
+		<p>2. Give us an array of the inventors first and last names</p>
+		<div class="section-2"></div>
+	</div>
+
+	<div>
+		<p>3. Sort the inventors by birthdate, oldest to youngest</p>
+		<div class="section-3"></div>
+	</div>
+
+	<div>
+		<p>4. How many years did all the inventors live all together?</p>
+		<div class="section-4"></div>
+	</div>
+
+	<div>
+		<p>5. Sort the inventors by years lived</p>
+		<div class="section-5"></div>
+	</div>
+
+	<div>
+		<p>6. create a list of Boulevards in Paris that contain 'de' anywhere in the name.
+		<a href="https://en.wikipedia.org/wiki/Category:Boulevards_in_Paris">Boulevards in Paris</a></p>
+		<div class="section-6">Run using Devtools on Wikipedia page.</div>
+	</div>
+
+	<div>
+		<p>7. sort Exercise. Sort the people alphabetically by last name.</p>
+		<div class="section-7"></div>
+	</div>
+
+	<div>
+		<p>8. Reduce Exercise. Sum up the instances of each of these.</p>
+		<div class="section-8"></div>
+	</div>
+
 	<script type="text/javascript">
-		
+		const inventors = [
+			{ first: 'Albert', last: 'Einstein', year: 1879, passed: 1955 },
+			{ first: 'Isaac', last: 'Newton', year: 1643, passed: 1727 },
+			{ first: 'Galileo', last: 'Galilei', year: 1564, passed: 1642 },
+			{ first: 'Marie', last: 'Curie', year: 1867, passed: 1934 },
+			{ first: 'Johannes', last: 'Kepler', year: 1571, passed: 1630 },
+			{ first: 'Nicolaus', last: 'Copernicus', year: 1473, passed: 1543 },
+			{ first: 'Max', last: 'Planck', year: 1858, passed: 1947 },
+			{ first: 'Katherine', last: 'Blodgett', year: 1898, passed: 1979 },
+			{ first: 'Ada', last: 'Lovelace', year: 1815, passed: 1852 },
+			{ first: 'Sarah E.', last: 'Goode', year: 1855, passed: 1905 },
+			{ first: 'Lise', last: 'Meitner', year: 1878, passed: 1968 },
+			{ first: 'Hanna', last: 'Hammarström', year: 1829, passed: 1909 }
+		];
+		const people = ['Beck, Glenn', 'Becker, Carl', 'Beckett, Samuel', 'Beddoes, Mick', 'Beecher, Henry', 'Beethoven, Ludwig', 'Begin, Menachem', 'Belloc, Hilaire', 'Bellow, Saul', 'Benchley, Robert', 'Benenson, Peter', 'Ben-Gurion, David', 'Benjamin, Walter', 'Benn, Tony', 'Bennington, Chester', 'Benson, Leana', 'Bent, Silas', 'Bentsen, Lloyd', 'Berger, Ric', 'Bergman, Ingmar', 'Berio, Luciano', 'Berle, Milton', 'Berlin, Irving', 'Berne, Eric', 'Bernhard, Sandra', 'Berra, Yogi', 'Berry, Halle', 'Berry, Wendell', 'Bethea, Erin', 'Bevan, Aneurin', 'Bevel, Ken', 'Biden, Joseph', 'Bierce, Ambrose', 'Biko, Steve', 'Billings, Josh', 'Biondo, Frank', 'Birrell, Augustine', 'Black, Elk', 'Blair, Robert', 'Blair, Tony', 'Blake, William'];
+
+		// show data
+		arrayToHtml(inventors, "inventors");
+		arrayToHtml(people, "people", true);
+
+		// Array.prototype.filter()
+		// 1. filter the list of inventors for those who were born in the 1500's
+
+		//// NON-REDUCED FUNCTION
+		//// const f = inventors.filter(function(inventor) {
+		//// 	if(inventor.year >= 1500 && inventor.year <= 1599) {
+		//// 		return true;	// keep this element, it goes into the array
+		//// 	}
+		//// });
+
+		//// REDUCED FUNCTION
+		//// i => i.year >= 1500 && i.year <= 1599 returns a true if it falls into that condition
+		const inv = inventors.filter(i => i.year >= 1500 && i.year <= 1599);
+
+		// log the array as a table
+		console.table(inv);
+		arrayToHtml(inv, "section-1");
+
+		// Array.prototype.map()
+		// 2. give an array of inventors first and last names
+		// map takes in an array, computes and returns a new array of the same length
+		// always returns the same amount of elements as the source array
+		const fN = inventors.map(i => `${i.first} ${i.last}`);
+		console.table(fN);
+		arrayToHtml(fN, "section-2", true);
+
+		// Array.prototype.sort()
+		// 3. sort the inventors by birthdate, oldest to youngest
+		//// NON-REDUCED FUNCTION
+		//// const ol = inventors.sort(function(x, y) {
+		//// 	return (x.year > y.year) ? 1 : -1;
+		//// 	// if(x.year > y.year) {
+		//// 	// 	return 1;
+		//// 	// } else {
+		//// 	// 	return -1;
+		//// 	// }
+		//// });
+
+		//// REDUCED FUNCTION
+		const ol = inventors.sort((x, y) => (x.year > y.year) ? 1 : -1);
+		console.table(ol);
+		arrayToHtml(ol, "section-3");
+
+		// Array.prototype.reduce()
+		// 4. how many years did all the inventors live all together?
+		// reduce runs a reducer function on each element of the array
+		// and returns a single output value
+		const totalYears = inventors.reduce((total, inventor) => {
+			// total doesnt have an initial value unless specified in the ,0 below
+			return total + (inventor.passed - inventor.year);
+		}, 0);	// array.reduce(function, initialValue);
+
+		toHtml(totalYears, "section-4");
+		console.log(totalYears);
+
+		// 5. sort the inventors by years lived
+		const oldest = inventors.sort(function(x, y) {
+			const lastPerson = x.passed - x.year;
+			const nextPerson = y.passed - y.year;
+
+			return (lastPerson > nextPerson) ? -1 : 1;
+		});
+
+		console.table(oldest);
+		arrayToHtml(oldest, "section-5");
+
+		// 6. create a list of Boulevards in Paris that contain 'de' anywhere in the name
+		// From: https://en.wikipedia.org/wiki/Category:Boulevards_in_Paris
+
+		//// This is meant to run on the Wikipedia page, under dev tools
+		// used to get the data from Wikipedia
+		// get the category for the list
+		// const category = document.querySelector('.mw-category');
+		// // get the links within '.mw-category'
+		// // Array.from gets an array from a NodeList
+		// const links = Array.from(category.querySelectorAll('a'));
+		// // use an array spread to cast the NodeList into an array
+		// const links1 = [...category.querySelectorAll('a')];
+		// // get the de street names
+		// const de = links
+		// 	.map(link => link.textContent)
+		// 	.filter(streetName => streetName.includes('de'));
+
+		// 7. sort exercise
+		// sort the people alphabetically by last name
+		const alpha = people.sort((lastOne, nextOne) => {
+			// split up the name string into separate vars
+			const [xLast, xFirst] = lastOne.split(',');
+			const [yLast, yFirst] = nextOne.split(',');
+
+			return (xLast > yLast) ? -1 : 1;
+		});
+
+		console.log(alpha);
+		arrayToHtml(alpha, "section-7", true);
+
+		// 8. reduce exercise
+		// sum up the instances of these
+		const data = ['car', 'car', 'truck', 'truck', 'bike', 'walk', 'car', 'van', 'bike', 'walk', 'car', 'van', 'car', 'truck'];
+		arrayToHtml(data, "data", true);
+
+		const transportation = data.reduce(function(obj, item) {
+			// item doesnt exist, instantiate it, 
+			// instead of initializing as the second argument in the reduce.
+			if(!obj[item]) {
+				obj[item] = 0;
+			}
+			obj[item]++;
+			return obj;
+		}, {});
+
+		console.log(transportation);
+		objToHtml(transportation, "section-8");
+
+		//// HELPER FUNCTIONS
+		// helper function to print data to html
+		function toHtml(data, elementClass) {
+			document.getElementsByClassName(elementClass)[0].append(data);
+		}
+
+		function objToHtml(obj, elementClass) {
+			document.getElementsByClassName(elementClass)[0].append(printObject(obj));
+		}
+
+		// helper function to print the contents of an array to HTML
+		function arrayToHtml(array, elementClass, isPlainArray=false) {
+			// make container element for the list
+			ul = document.createElement('ul');
+
+			// add the element to the page
+			document.getElementsByClassName(elementClass)[0].appendChild(ul);
+
+			for(i = 0; i < array.length; i++) {
+				// create the li element
+				li = document.createElement('li');
+				
+				// add the inner html text
+				if(isPlainArray) {
+					li.innerHTML = array[i];
+				} else {
+					li.innerHTML = printObject(array[i]);
+				}
+				
+				// add to list element
+				ul.appendChild(li);
+			}
+		}
+
+		// helper function to print the properties of an object
+		function printObject(o) {
+			var out = '';
+			for (var p in o) {
+				out += p + ': ' + o[p] + '; ';
+			}
+			return out;
+		}
 	</script>
 </body>
+
 </html>
