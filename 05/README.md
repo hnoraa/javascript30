@@ -117,13 +117,6 @@ The css.
     font-size: 4em;
 }
 
-.panel p {
-    text-transform: uppercase;
-    font-family: 'Amatic SC', cursive;
-    text-shadow: 0 0 4px rgba(0,0,0,0.72), 0 0 14px rgba(0,0,0,0.45);
-    font-size: 2em;
-}
-
 .panel.open {
     font-size: 40px;
     flex: 5;	/* expand the panel, take 5 times the amount of extra room as the other panels */
