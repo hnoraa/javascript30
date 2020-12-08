@@ -1,17 +1,133 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 	<meta charset="UTF-8">
-	<title></title>
+	<title>AJAX Type Ahead</title>
 	<link rel="stylesheet" href="./style.css">
 	<style>
-	
+		body {
+			margin: 0 auto;
+			background-color: #deb887;
+		}
+
+		.frmSearch {
+			margin: 0 auto;
+		}
+
+		.search {
+			padding: 10px;
+			font-size: 12pt;
+		}
+
+		.suggestions {
+			list-style-type: none;
+			margin: 0;
+			padding: 0;
+			width: 100%;
+		}
+
+		.suggestions li {
+			border-bottom: 1px solid #d2691e;
+			background-color: #fff8dc;
+			display: block;
+			clear: both;
+			height: 25px;
+			padding: 10px 5px 0 5px;
+		}
+
+		li .name {
+			font-size: 12pt;
+			text-transform: capitalize;
+			float: left;
+		}
+
+		li .population {
+			font-size: 8pt;
+			color: #696969;
+			float: right;
+		}
+
+		.hl {
+			background-color: #ff6600;
+		}
 	</style>
 </head>
+
 <body>
-	
+	<form class="frmSearch">
+		<input type="text" class="search" placeholder="City or State">
+		<ul class="suggestions">
+			<li>Filter for a city</li>
+			<li>or a state...</li>
+		</ul>
+	</form>
+
 	<script type="text/javascript">
-		
+		const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
+		const cities = [];
+
+		// fetch data using fetch()
+		// this is builtin to the browser
+		// fetch() returns a promise
+		// .then() returns the data from the promise
+		// this data is a response type, the code doesn't know what type of data it is yet
+		// the raw data coming from .then() has to be converted
+		// x.json() then returns another promise which needs another .then() to get the actual data (see cities.json)
+		// to get the data into the cities array (which is const), we will use spread which is in ES6 
+		// spread allows you to take the array of body and push each item into the cities array
+		// spread is called with ...
+		fetch(endpoint)
+			.then(result => result.json())
+			.then(body => cities.push(...body));
+
+		// filter function to filter down cities array based on search query
+		function filter(query, cities) {
+			return cities.filter(place => {
+				// figure out if city or state contains search criteria (in query)
+
+				// regex - pass in the query term and any flags
+				// flags used: 	g - global
+				// 				i - case insensitive
+				const r = new RegExp(query, 'gi');
+
+				return place.city.match(r) || place.state.match(r);
+			});
+		}
+
+		function numberWithCommas(x) {
+			return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+		}
+
+		// display results to frontend
+		function display() {
+			// get out matches
+			const matches = filter(this.value, cities);
+
+			// format the html for the list
+			// .join('') at the end turns it from an array with multiple items into one string for html 
+			const html = matches.map(place => {
+				const r = new RegExp(this.value, 'gi');
+				const cityName = place.city.replace(r, `<span class="hl">${this.value}</span>`);
+				const stateName = place.state.replace(r, `<span class="hl">${this.value}</span>`);
+				return `
+						<li>
+							<span class="name">${cityName}, ${stateName}</span>
+							<span class="population">${numberWithCommas(place.population)}</span>
+						</li>
+					`;
+			}).join('');
+
+			// replace the data in the <ul> tags with the new matches array
+			list.innerHTML = html;
+		}
+
+		const textBox = document.querySelector('.search');
+		const list = document.querySelector('.suggestions');
+
+		textBox.addEventListener('change', display);	// fires when focus is moved away from text
+		textBox.addEventListener('keyup', display);		// fires when keys are pressed
 	</script>
 </body>
+
 </html>
