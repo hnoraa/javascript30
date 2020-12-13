@@ -2,16 +2,104 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title></title>
+	<title>HTML5 Canvas</title>
 	<link rel="stylesheet" href="./style.css">
 	<style>
-	
+		html, body {
+			margin: 0;
+		}
 	</style>
 </head>
 <body>
-	
+	<canvas id="draw" width="800" height="800"></canvas>
 	<script type="text/javascript">
-		
+		// get the canvas element and the 2d context of the canvas
+		// the context is where the rendering is done
+		const canvas = document.querySelector("#draw");
+		const ctx = canvas.getContext("2d");
+
+		// set canvas to window size
+		canvas.width = window.innerWidth;
+		canvas.height = window.innerHeight;
+
+		// base drawing settings
+		// strokeStyle == color
+		// lineJoin == how lines connect with other lines
+		// lineCap == how lines terminate
+		// lineWidth == thickness of line
+		ctx.strokeStyle = "#bada55";
+		ctx.lineJoin = "round";
+		ctx.lineCap = "round";
+		ctx.lineWidth = 100;
+		ctx.globalCompositeOperation = "multiply";	// blending
+
+		let isDrawing = false;
+
+		// where the line ends
+		let lastX = 0;
+		let lastY = 0;
+
+		// hsl vars
+		let hue = 0;
+		let saturation = 100;
+		let lightness = 55;
+
+		// line width vars
+		let direction = true;
+
+
+		function draw(e) {
+			if (!isDrawing) return;
+			
+			// set the stroke style of the context to hsl colors
+			ctx.strokeStyle = `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+
+			// do some drawing!!!!
+			ctx.beginPath();
+
+			// start with an (x,y) and then move to a new (x,y) which will complete the path
+			ctx.moveTo(lastX, lastY);
+			ctx.lineTo(e.offsetX, e.offsetY);
+
+			// stroke does the drawing
+			ctx.stroke();
+
+			// update mouse coordinates
+			[lastX, lastY] = [e.offsetX, e.offsetY];
+
+			// update hue
+			// with hsl, hue is 0 - 359 but when you go over 359, it automatically adjusts 
+			if (hue < 360) {
+				hue++;
+			} else {
+				hue = 0;
+			}
+
+			// make line width oscillate (get big and then small again)
+			if (ctx.lineWidth >= 100 || ctx.lineWidth <= 10) {
+				direction = !direction;
+			}
+
+			if (direction) {
+				ctx.lineWidth++;
+			} else {
+				ctx.lineWidth--;
+			}
+		}
+
+		// mousedown will happen first in this case becase we dont start drawing (moving the mouse)
+		// until mouse is clicked
+		canvas.addEventListener("mousedown", (e) => {
+			// on the mouse down event, get the current mouse coordinates and set lastX/lastY
+			isDrawing = true;
+			[lastX, lastY] = [e.offsetX, e.offsetY];
+		});
+
+		canvas.addEventListener("mousemove", draw);
+
+		// inline arrow functions () => ...
+		canvas.addEventListener("mouseup", () => isDrawing = false);
+		canvas.addEventListener("mouseout", () => isDrawing = false);
 	</script>
 </body>
 </html>
