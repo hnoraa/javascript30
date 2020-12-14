@@ -2,16 +2,91 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title></title>
+	<title>Console Tricks</title>
 	<link rel="stylesheet" href="./style.css">
 	<style>
 	
 	</style>
 </head>
 <body>
-	
+	<p onClick="makeGreen()">Hello World!</p>
 	<script type="text/javascript">
-		
+		const dogs = [
+			{name: 'Snickers', age: 2},
+			{name: 'hugo', age: 8}
+		];
+
+		function makeGreen() {
+			const p = document.querySelector('p');
+			p.style.color = '#bada55';
+			p.style.fontSize = '50px';
+		}
+
+		// regular
+		console.log('regular console.log() statement');
+
+		// interpolated - interpolate values into the console.log statement
+		console.log('Test - this string = %s', new Date().toString());
+		console.log(`Using ES6 backticks - ${new Date()}`);
+
+		// styled - %c allows css styling
+		console.log('%cshell>', 'color:#bada55; background-color:#000000;')
+
+		// warning!
+		console.warn('WARNING!!!!');
+
+		// error
+		console.error('ERROR!!!!!!!!!!!!!!!!!!!!!!!!!!');
+
+		// info
+		console.info('Information: this is a test...');
+
+		// Testing
+		console.log('Asserting 1 === 1');
+		console.assert(1 === 1, 'This means the assertion failed... :(');
+
+		// clearing
+		console.clear();
+		console.info('Console has been cleared');
+
+		// viewing DOM elements
+		// console.dir() gives you all the properties of an element
+		const p = document.querySelector('p');
+		console.log(p);
+		console.dir(p);
+
+		// grouping together
+		console.table(dogs);
+
+		dogs.forEach(dog => {
+			// group allows you to compress or organize the output into collapsable groups
+			// groupEnd must have the same string as the call to console.group()
+			// groupCollapsed makes the data appear in the collapsed state (space saver)
+			//console.group(`${dog.name}`);
+			console.groupCollapsed(`${dog.name}`);
+			console.log(`human years: ${dog.age}\ndog years: ${dog.age * 7}`);
+			console.groupEnd(`${dog.name}`);
+		});
+
+		// counting
+		console.count('dog');
+		console.count('dog');
+		console.count('dog');
+		console.count('dog');
+		console.count('dog');
+
+		// timing
+		// see how long something takes
+		console.time('fetching data');
+		fetch('https://api.github.com/users/x')
+			.then(data => data.json())
+			.then(data => {
+				// end the time capture
+				// need to pass the same string from .time()
+				// into .timeEnd()
+				console.timeEnd('fetching data');
+				console.log(data);
+			});
 	</script>
 </body>
 </html>
