@@ -1,13 +1,54 @@
 html {
 	font-family: Courier;
-	text-align: center;
-	font-size: 10px;
+	text-align : center;
+	font-size  : 10px;
 }
 
 body {
-	font-size: 2rem;
-	display: flex;
-	flex: 1;
-	min-height: 100vh;
-	align-items: center;
+	font-size       : 2rem;
+	display         : flex;
+	flex            : 1;
+	min-height      : 100vh;
+	align-items     : center;
+	background-color: #d4ecff;
+}
+
+.inbox {
+	margin          : 0 auto;
+	padding         : 20px;
+	height          : 700px;
+	width           : 900px;
+	background-color: #f1f1ed;
+	box-shadow      : 10px 10px 5px #757575;
+	overflow-y      : scroll;
+}
+
+.item {
+	border-left     : 4px solid #bebebe;
+	border-bottom   : 2px solid #bebebe;
+	padding         : 1px;
+	background-color: #f8f8f8;
+}
+
+.item input[type=checkbox] {
+	margin-top      : 10px;
+	float           : left;
+	background-color: #d4d4d4;
+	width           : 20px;
+	height          : 20px;
+	top             : 0;
+	left            : 0;
+	height          : 25px;
+	width           : 25px;
+}
+
+.item input:checked {
+	display         : block;
+	background-color: #6cb2ec;
+}
+
+.item p {
+	font-size  : 12pt;
+	text-align : left;
+	margin-left: 40px;
 }

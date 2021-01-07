@@ -2,16 +2,134 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title></title>
+	<title>Hold Shift to Check</title>
 	<link rel="stylesheet" href="./style.css">
 	<style>
 	
 	</style>
 </head>
 <body>
-	
+	<div class="inbox">
+		<div class="item">
+			<input type="checkbox">
+			<p>This is an inbox layout.</p>
+		</div>
+		<div class="item">
+			<input type="checkbox">
+			<p>Check one item</p>
+		</div>
+		<div class="item">
+			<input type="checkbox">
+			<p>Hold down the Shift key</p>
+		</div>
+		<div class="item">
+			<input type="checkbox">
+			<p>Check a lower item</p>
+		</div>
+		<div class="item">
+			<input type="checkbox">
+			<p>Everything inbetween should also be set to checked</p>
+		</div>
+		<div class="item">
+			<input type="checkbox">
+			<p>Try to do it without any libraries</p>
+		</div>
+		<div class="item">
+			<input type="checkbox">
+			<p>Just vanilla JS</p>
+		</div>
+		<div class="item">
+			<input type="checkbox">
+			<p>Good luck!</p>
+		</div>
+		<div class="item">
+			<input type="checkbox">
+			<p>Lorem Ipsum...</p>
+		</div>
+		<div class="item">
+			<input type="checkbox">
+			<p>Lorem Ipsum...</p>
+		</div>
+		<div class="item">
+			<input type="checkbox">
+			<p>Lorem Ipsum...</p>
+		</div>
+		<div class="item">
+			<input type="checkbox">
+			<p>Lorem Ipsum...</p>
+		</div>
+		<div class="item">
+			<input type="checkbox">
+			<p>Lorem Ipsum...</p>
+		</div>
+		<div class="item">
+			<input type="checkbox">
+			<p>Lorem Ipsum...</p>
+		</div>
+		<div class="item">
+			<input type="checkbox">
+			<p>Lorem Ipsum...</p>
+		</div>
+		<div class="item">
+			<input type="checkbox">
+			<p>Lorem Ipsum...</p>
+		</div>
+		<div class="item">
+			<input type="checkbox">
+			<p>Lorem Ipsum...</p>
+		</div>
+		<div class="item">
+			<input type="checkbox">
+			<p>Lorem Ipsum...</p>
+		</div>
+		<div class="item">
+			<input type="checkbox">
+			<p>Lorem Ipsum...</p>
+		</div>
+		<div class="item">
+			<input type="checkbox">
+			<p>Lorem Ipsum...</p>
+		</div>
+	</div>
+
+	<div class="container">
+		<input id="resetBtn" type="button" value="Reset" onclick="reset()">
+	</div>
+
 	<script type="text/javascript">
-		
+		const resetBtn = document.getElementById('resetBtn');		
+		const checkboxes = document.querySelectorAll('.inbox input[type="checkbox"]');
+
+		let lastChecked;
+
+		resetBtn.addEventListener('click', reset);
+		checkboxes.forEach(c => c.addEventListener('click', handleCheck));
+
+		function reset(e) {
+			checkboxes.forEach(c => c.checked = false);
+		}
+
+		function handleCheck(e) {
+			let inBetween = false;
+
+			// check if shift is being held
+			// and check that the checkboxes are being checked
+			if(e.shiftKey && this.checked) {
+				// allow checking of multiple checkboxes
+				// loop over all checkboxes
+				checkboxes.forEach(c => {
+					if(c === this || c === lastChecked) {
+						inBetween = !inBetween;
+					}
+
+					if(inBetween) {
+						c.checked = true;
+					}
+				});
+			}
+
+			lastChecked = this;
+		}
 	</script>
 </body>
 </html>
