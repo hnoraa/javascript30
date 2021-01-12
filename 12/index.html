@@ -2,16 +2,27 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title></title>
-	<link rel="stylesheet" href="./style.css">
-	<style>
-	
-	</style>
+	<title>Konami Code</title>
+	<script type="text/javascript" src="http://www.cornify.com/js/cornify.js"></script>
 </head>
 <body>
 	
 	<script type="text/javascript">
-		
+		const konamiCode = [];
+		const secretCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 
+			'ArrowDown', 'ArrowLeft','ArrowRight', 'ArrowLeft',
+			'ArrowRight', 'a', 'b', 'Shift', 'Enter'];
+		window.addEventListener('keyup', (e) => {
+			konamiCode.push(e.key);
+
+			// splice the first item in the array
+			konamiCode.splice(-secretCode.length - 1, konamiCode.length - secretCode.length);
+
+			if(konamiCode.join('') === secretCode.join('')) {
+				alert('Infinite Lives');
+				cornify_add();
+			}
+		});
 	</script>
 </body>
 </html>
