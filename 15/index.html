@@ -2,16 +2,96 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title></title>
+	<title>Local Storage and Event Delegation</title>
 	<link rel="stylesheet" href="./style.css">
 	<style>
 	
 	</style>
 </head>
 <body>
+	<div class="wrapper">
+		<div class="title">
+			<h4>ITEMS</h4>
+		</div>
+		
+		<ul class="items-list">
+			<li>Loading Items...</li>
+		</ul>
+	
+		<form class="add-items">
+			<input type="text" name="item" placeholder="Item Name" required>
+			<input type="submit" value="+ Add Item">
+		</form>
+	</div>
 	
 	<script type="text/javascript">
-		
+		// local storage and event delegation
+		const addItems = document.querySelector('.add-items');
+		const itemsList = document.querySelector('.items-list');
+
+		// check that there's something in localstorage if not, use an empty array
+		const items = JSON.parse(localStorage.getItem('items')) || [];
+
+		function addItem(e) {
+			// preventDefault makes the form not refresh the page on submit
+			e.preventDefault();
+
+			// get the data
+			const text = (this.querySelector('[name=item]')).value;
+			const item = {
+				text: text,
+				done: false
+			};
+			items.push(item);
+
+			// populate the html
+			populateList(items, itemsList);
+
+			// add to localStorage
+			localStorage.setItem('items', JSON.stringify(items));
+
+			// reset the form
+			this.reset();
+		}
+
+		function populateList(arr=[], list) {
+			// create the html for the list
+			list.innerHTML = arr.map((item, i) => {
+				return `
+				<li>
+					<input type="checkbox" data-index=${i} id="item${i}" ${item.done ? 'checked': '' } />
+					<label for="item${i}">${item.text}</label>
+				</li>
+				`;
+			}).join('');
+		}
+
+		function toggleDone(e) {
+			// skip this unless its an input
+			if(!e.target.matches('input')) return;
+
+			// toggle the checkbox
+			const el = e.target;
+			const i = el.dataset.index;
+
+			items[i].done = !items[i].done;
+
+			// reset local storage
+			localStorage.setItem('items', JSON.stringify(items));
+
+			// populate the html
+			populateList(items, itemsList);
+		}
+
+		// event listeners
+		addItems.addEventListener('submit', addItem);
+
+		// event delegation
+		// get the click on the <ul> element, determine if it is a check box click or not
+		itemsList.addEventListener('click', toggleDone);
+
+		// on page load populate items from local storage
+		populateList(items, itemsList);
 	</script>
 </body>
 </html>
