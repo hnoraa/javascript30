@@ -2,16 +2,64 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title></title>
+	<title>CSS Text Shadow Mouse Move Effect</title>
 	<link rel="stylesheet" href="./style.css">
 	<style>
-	
+		body {
+			background-color: rgb(0, 0, 0);
+		}
+		
+		.hero {
+			margin: 0 auto;
+		}
+
+		h1 {
+			text-shadow: 10px 10px 0 rgba(0,0,0,1);
+			font-size: 100px;
+			color:rgb(159, 255, 122);
+		}
 	</style>
 </head>
 <body>
+	<div class="hero">
+		<h1 contenteditable>WEE WOOO!</h1>
+	</div>
 	
 	<script type="text/javascript">
-		
+		const hero = document.querySelector('.hero');
+		const heroText = hero.querySelector('h1');
+		const walk = 150;	// how far (in pixels) should the shadow be streched
+
+		function shadow(e) {
+			// const width = hero.offsetWidth;
+			// const height = hero.offsetHeight;
+			// ES6 reconstruction
+			const {offsetWidth: width, offsetHeight: height} = hero;
+
+			// this gets the position where your cursor is
+			let {offsetX: x, offsetY: y} = e;
+			
+			if(this !== e.target) {
+				// this is the div tag (hero)
+				// if the target is not the parent div
+				// i.e. it's the h1 tag, then add the offsetTop and offsetLeft to y,x respectively
+				// this gets nested elements
+				x = x + e.target.offsetLeft;
+				y = y + e.target.offsetTop;
+			}
+
+			const xWalk = Math.round((x / width * walk) - (walk / 2));
+			const yWalk = Math.round((y / height * walk) - (walk / 2));
+
+			heroText.style.textShadow = `
+			${xWalk}px ${yWalk}px 1px rgba(255,0,255,0.7),
+			${xWalk * -1}px ${yWalk}px 1px rgba(0,255,255,0.7),
+			${yWalk}px ${xWalk * -1}px 1px rgba(0,255,0,0.7),
+			${yWalk * -1}px ${yWalk}px 1px rgba(255,255,0,0.7)
+			`;
+		}
+
+		hero.addEventListener('mousemove', shadow);
 	</script>
 </body>
 </html>
